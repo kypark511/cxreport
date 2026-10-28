@@ -5508,6 +5508,16 @@ document.getElementById('okrTabs').addEventListener('click', e=>{
   const d=new Date();
   document.getElementById('tbDate').textContent = d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일';
   renderMonth('2026-08'); showWeekly();
+  // 주소 끝 #보고서id (예: #2026-10-w5) 로 들어오면 해당 주차 보고서를 바로 연다
+  const hashId = decodeURIComponent(location.hash.slice(1));
+  for(const m in REPORTS){
+    if(REPORTS[m].some(r=>r.id===hashId)){
+      renderMonth(m);
+      document.querySelectorAll('.sbi').forEach(b=>b.classList.toggle('on', b.dataset.view==='weekly'&&b.dataset.month===m));
+      openReport(hashId);
+      break;
+    }
+  }
 })();
 </script>
 </body>
